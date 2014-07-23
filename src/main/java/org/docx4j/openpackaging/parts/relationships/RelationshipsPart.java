@@ -206,12 +206,26 @@ public final class RelationshipsPart extends JaxbXmlPart<Relationships> {
 	/** Gets a loaded Part by its id */
 	public Part getPart(String id) {
 
-		log.debug("looking for: " + id);
+		if(log.isDebugEnabled()) {
+			log.debug("looking for: " + id);
+		}
 		
 		Relationship r = getRelationshipByID(id);
-    	log.info(id + " points to " + r.getTarget());
+    	
+		if(r != null) {
 		
-		return getPart(r);		
+			if(log.isInfoEnabled()) {
+				log.info(id + " points to " + r.getTarget());
+			}
+		
+			return getPart(r);
+		} else {
+			if(log.isInfoEnabled()) {
+				log.info("No part with ID = '" + id + "'");
+			}
+			
+			return null;
+		}
 	}
 	
 	/**
